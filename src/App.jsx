@@ -11,11 +11,8 @@ import Filter from './components/Filter';
 
 import './App.scss';
 
-import store from './redux/store';
-
-
 const App = ({filter, contacts}) => {
-  console.log(contacts);
+
   const visibleContacts = contacts.filter(({name}) => name.toLowerCase().includes(filter.toLowerCase()) )   
 
     return (
