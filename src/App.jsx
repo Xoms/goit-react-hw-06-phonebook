@@ -1,8 +1,6 @@
 import React  from 'react';
 import { CSSTransition } from 'react-transition-group';
 
-import { connect } from "react-redux";
-
 import Title from './components/shared/Title';
 import Container from './components/shared/Container';
 import PhonesForm from './components/PhonesForm';
@@ -11,9 +9,7 @@ import Filter from './components/Filter';
 
 import './App.scss';
 
-const App = ({filter, contacts}) => {
-
-  const visibleContacts = contacts.filter(({name}) => name.toLowerCase().includes(filter.toLowerCase()) )   
+const App = () => {   
 
     return (
       <Container className="container phonebook">
@@ -21,31 +17,17 @@ const App = ({filter, contacts}) => {
           appear={true}
           classNames="fade" 
           unmountOnExit 
-          timeout={500}>
+          timeout={500}
+        >
           <Title title="Phonebook"/>
-
         </CSSTransition>
-  
 
-        <PhonesForm contacts={contacts}/>
+        <PhonesForm/>
         <Title title="Contacts" className="main-title"/>
         <Filter/>
-        <ContactsList contacts={visibleContacts}/>
+        <ContactsList/>
 
       </Container>
     );  
 }
-
-
-
-//////REDUX /////////
-const mapStateToProps = state => {
-  return { 
-    contacts: state.contacts.items,
-    filter: state.contacts.filter
-   }
-}
-
-
-
-export default connect(mapStateToProps)(App);
+export default App;

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import filterActions from "../../redux/filter/filterActions";
+import filterActions from "../../redux/phonebook/filter/filterActions";
 
 import './Filter.scss';
 

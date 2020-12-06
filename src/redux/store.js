@@ -1,18 +1,20 @@
-import {createStore, combineReducers } from 'redux';
-import recordReducer from './contacts/recordReducer';
-import filterReducer from './filter/filterReducer';
+//import {createStore, combineReducers } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
+import phonebookReducer from './phonebook/phonebookReducer';
 
+//без тулзов 
+// const rootReducer = combineReducers({
+//     contacts: phonebookReducer,
+// })
+//
+// const store = createStore(rootReducer,
+//   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
-const appReducer = combineReducers( {
-  filter: filterReducer,
-  items: recordReducer,
+// с тулзами 
+const store = configureStore({
+  reducer: {
+    contacts: phonebookReducer,
+  }
 })
-
-const rootReducer = combineReducers({
-    contacts: appReducer
-})
-
-const store = createStore(rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 export default store;

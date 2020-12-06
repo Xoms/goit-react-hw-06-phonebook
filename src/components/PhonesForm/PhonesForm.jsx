@@ -4,7 +4,7 @@ import {v4 as uuid} from 'uuid';
 import { CSSTransition } from 'react-transition-group';
 
 import { connect } from 'react-redux';
-import recordActions from "../../redux/contacts/recordActions";
+import recordActions from "../../redux/phonebook/contacts/recordActions";
 
 import ErrMsg from '../shared/ErrorMessage';
 import Button from "../shared/Button";
@@ -19,14 +19,19 @@ const initialState = {
 
 class PhonesForm extends Component  {
 
+  static propTypes = {
+    contacts: PropTypes.arrayOf(PropTypes.exact({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      number: PropTypes.string
+    })).isRequired,
+    onContactAdd: PropTypes.func.isRequired,
+  };
+
   state = { ...initialState }
 
   changeHandler = ({target}) => {
-    this.setState( () => {
-      return {
-        [target.name]: target.value
-      }
-    })
+    this.setState({ [target.name]: target.value })
   }
 
   submitHandler = (e) => {
@@ -38,28 +43,22 @@ class PhonesForm extends Component  {
     }
 
     const newRecord = this.makeRecord()
-    this.setState({ ...initialState })
-    console.log(newRecord);
-    console.log(this.props.onContactAdd)
     this.props.onContactAdd(newRecord);
-
-    localStorage.setItem('contacts', JSON.stringify(this.props.contacts))
+    this.setState({ ...initialState })
   }
 
+
   isContactExists(currName){
-    console.log(this.props.contacts.some( ({name}) => name === currName))
-    return (this.props.contacts.some( ({name}) => name === currName))
+    return (this.props.contacts.some( ({name}) => name === currName));
   }
 
   showErrMsg() {
-    this.setState({
-      isExist: true
-    })
-    setTimeout(() => this.hideErrMsg(), 2000)
+    this.setState({ isExist: true });
+    setTimeout(() => this.hideErrMsg(), 2000);
   }
 
   hideErrMsg = ()=> {
-    this.setState({isExist: false});
+    this.setState({ isExist: false });
   }
 
   makeRecord(){
@@ -68,18 +67,18 @@ class PhonesForm extends Component  {
     return {id, name, number}
   }
 
- 
-
   render(){
     const {name, number, isExist} = this.state
     return (
       <form className="contacts-form" onSubmit={this.submitHandler}>
 
-        <CSSTransition in={isExist} 
-        classNames="err" 
-        appear={true}
-        unmountOnExit 
-        timeout={250}>
+        <CSSTransition 
+          in={isExist} 
+          classNames="err" 
+          appear={true}
+          unmountOnExit 
+          timeout={250}
+        >
           <ErrMsg content="This person is already in your contacts list" onClick={this.hideErrMsg}/>
         </CSSTransition>
 
@@ -108,26 +107,20 @@ class PhonesForm extends Component  {
   }  
 };
 
-PhonesForm.propTypes = {
-  onContactAdd: PropTypes.func.isRequired,
-};
-
+////////////REDUX////////////
 const mapStateToProps = state => {
   return { 
     contacts: state.contacts.items,
-   }
+  }
 }
-
 
 const mapDispatchToProps = { 
   onContactAdd: recordActions.addContact,
-  onContactDelete: recordActions.delContact,
 }
 // по факту происходит такое
 // const mapDispatchToProps = dispatch => { 
 //   return {
-//     submitHendler: (val) => dispatch(recordActions.addContact(val))
-//     changeHandler: 
+//     onContactAdd: (val) => dispatch(recordActions.addContact(val))
 //   }
 // }
 
