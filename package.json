@@ -1,12 +1,12 @@
 {
-  "name": "goit-react-hw-05-phonebook",
+  "name": "goit-react-hw-06-phonebook",
   "version": "0.1.0",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Xoms/goit-react-hw-05-phonebook.git"
+    "url": "git+https://github.com/Xoms/goit-react-hw-06-phonebook.git"
   },
-  "homepage": "https://xoms.github.io/goit-react-hw-05-phonebook",
+  "homepage": "https://xoms.github.io/goit-react-hw-06-phonebook",
   "resolutions": {
     "styled-components": "^5"
   },
